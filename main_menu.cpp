@@ -39,8 +39,8 @@ void mainMenu(LoginRegisterForgot &loginregisterforgot) {
         case 5:
 
         case 6:
-
-        
+            loginregisterforgot.cancel();
+            break;
         case 7:
             cout << "\n" << endl;
             cout << "\t\t\t\t\t ___________________________________________________________________" << endl;

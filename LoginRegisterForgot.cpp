@@ -164,3 +164,77 @@ void LoginRegisterForgot::booking()
     } while (choice != 3);
 
 }
+
+void LoginRegisterForgot::cancel()
+{
+    int rows = 30;
+    int cols = 6;
+    FlightReservationSystem system(rows, cols);
+
+    int choice;
+    do {
+        cout << "\t\t\t\t\t __________________________________________________________________"  << endl;
+        cout << "\t\t\t\t\t|                                                                  |" << endl;
+        cout << "\t\t\t\t\t|                        Cancle Reservation                        |" << endl;
+        cout << "\t\t\t\t\t|__________________________________________________________________|" << endl;
+        cout << "\t\t\t\t\t|                                                                  |" << endl;
+        cout << "\t\t\t\t\t|            Press 1 ---- 1) Confirm Cancel Booking Seats          |" << endl;
+        cout << "\t\t\t\t\t|            Press 2 ---- 2) Check Seats Status                    |" << endl;
+        cout << "\t\t\t\t\t|            Press 3 ---- 3) Exit                                  |" << endl;
+        cout << "\t\t\t\t\t|__________________________________________________________________|" << endl;
+        cout << "\n"<< endl;
+        cout << "\t\t\t\t\t                     Enter your choice > ";
+            cin >> choice;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number.\n";
+            continue;  
+        }
+
+        switch (choice) {
+        case 1: {
+            int numSeats;
+            cout << "Enter the number of seats to cancel: ";
+            cin >> numSeats;
+
+            if (cin.fail() || numSeats <= 0) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a positive integer.\n";
+                break;
+            }
+
+            vector<pair<int, int>> seatSelections;
+            for (int i = 0; i < numSeats; ++i) {
+                int row, col;
+                cout << "Enter row and column for seat " << i + 1 << " (e.g., 1 2): ";
+                cin >> row >> col;
+
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Invalid input. Please enter valid row and column numbers.\n";
+                    --i; 
+                    continue;
+                }
+
+                seatSelections.emplace_back(row, col);
+            }
+
+            system.cancelSeats(seatSelections);
+            break;
+        }
+        case 2:
+            system.displaySeats();
+            break;
+        case 3:
+            cout << "Exiting the system. Thank you!\n";
+            break;
+        default:
+            cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 3);
+
+}
